@@ -23,7 +23,7 @@ class User(db.Model):
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+	return render_template('403.html')
 @app.route('/full')
 def full():
 	return render_template('main.html')
