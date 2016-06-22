@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import render_template
-
+import psutil
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_ECHO'] = True
@@ -27,7 +27,12 @@ def index():
 @app.route('/full')
 def full():
 	return render_template('main.html')
-
+@app.route('/load')
+def load():
+	cpu= psutil.cpu_percent()
+	memory= psutil.virtual_memory()
+	mem=memory.percent
+	return "CPU: {} Memory: {}".format(cpu,mem)
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
