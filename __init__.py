@@ -1,24 +1,10 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask import render_template
+from flask import *
 import psutil
 #App Config
 app = Flask(__name__)
-app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.debug= True
-db = SQLAlchemy(app)
-app.debug = True
-app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql://aditya:Bangalore12E@localhost/flask'
-#User Declaration
-class User(db.Model):
-	uid = db.Column(db.Integer, primary_key= True)
-	username = db.Column(db.String(20), unique=True)
-	password = db.Column(db.String(20), unique= True)
 
-	def __init__(self,username, password):
-		self.username = username
-		self.password = password
+app.debug = True
+
 #Routes
 @app.route('/')
 def index():
@@ -43,8 +29,4 @@ def unauthaurized_request(e):
     return render_template('403.html'), 403
 #Run App
 if __name__ == "__main__":
-	app.run()
-#App Destroy
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.remove()
+	app.run(host = '0.0.0.0')
